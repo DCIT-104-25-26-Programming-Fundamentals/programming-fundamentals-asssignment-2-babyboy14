@@ -80,3 +80,102 @@
 #include <string>
 using namespace std;
 
+// Function to display the main menu options
+void showMenu() {
+    cout << "\n============================" << endl;
+    cout << "     TO-DO LIST MENU        " << endl;
+    cout << "============================" << endl;
+    cout << "1. Add task" << endl;
+    cout << "2. View tasks" << endl;
+    cout << "3. Delete task" << endl;
+    cout << "4. Quit" << endl;
+    cout << "Enter your choice (1-4): ";
+}
+
+// Function to add a task to the vector
+void addTask(vector<string>& tasks) {
+    cout << "Enter task: ";
+    cin.ignore(); // Clear newline character from buffer
+    string task;
+    getline(cin, task);
+    
+    tasks.push_back(task);
+    cout << "Task added: \"" << task << "\"" << endl;
+}
+
+// Function to display all current tasks
+void viewTasks(const vector<string>& tasks) {
+    if (tasks.empty()) {
+        cout << "\nYour to-do list is empty!" << endl;
+        return;
+    }
+
+    cout << "\nYour Tasks:" << endl;
+    for (size_t i = 0; i < tasks.size(); i++) {
+        cout << (i + 1) << ". " << tasks[i] << endl;
+    }
+}
+
+// Function to delete a task by its 1-based index number
+void deleteTask(vector<string>& tasks) {
+    if (tasks.empty()) {
+        cout << "\nYour to-do list is empty. Nothing to delete." << endl;
+        return;
+    }
+
+    // First display current tasks so user knows the numbers
+    viewTasks(tasks);
+
+    int taskNum;
+    cout << "\nEnter task number to delete: ";
+    cin >> taskNum;
+
+    // Validate if the number corresponds to a valid 1-based index
+    if (taskNum < 1 || taskNum > static_cast<int>(tasks.size())) {
+        cout << "Error: Invalid task number!" << endl;
+    } else {
+        string removedTask = tasks[taskNum - 1];
+        tasks.erase(tasks.begin() + (taskNum - 1)); // Remove element from vector
+        cout << "Task \"" << removedTask << "\" has been removed." << endl;
+    }
+}
+
+int main() {
+    vector<string> tasks;
+    int choice = 0;
+
+    // Menu loop continues running until choice 4 (Quit) is selected
+    while (choice != 4) {
+        showMenu();
+        cin >> choice;
+
+        // Check for non-numeric or invalid input stream state
+        if (cin.fail()) {
+            cin.clear();            // Clear input error flag
+            cin.ignore(1000, '\n'); // Discard invalid characters
+            cout << "Invalid input. Please enter a number between 1 and 4." << endl;
+            continue;
+        }
+
+        switch (choice) {
+            case 1:
+                addTask(tasks);
+                break;
+            case 2:
+                viewTasks(tasks);
+                break;
+            case 3:
+                deleteTask(tasks);
+                break;
+            case 4:
+                cout << "Goodbye!" << endl;
+                break;
+            default:
+                cout << "Invalid choice! Please select a valid menu option (1-4)." << endl;
+                break;
+        }
+    }
+
+    return 0;
+}
+
