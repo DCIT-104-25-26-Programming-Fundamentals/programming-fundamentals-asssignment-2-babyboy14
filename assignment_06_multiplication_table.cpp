@@ -57,3 +57,63 @@
 #include <iostream>
 using namespace std;
 
+// PART A — Print Multiplication Table for a Single Number (1 to 12)
+void printTable(int num) {
+    // Input validation for Part A function
+    if (num <= 0) {
+        cout << "Error: Number must be a positive integer." << endl;
+        return;
+    }
+
+    cout << "Multiplication Table for " << num << ":" << endl;
+    for (int i = 1; i <= 12; i++) {
+        cout << num << "  x  " << i << "  =  " << (num * i) << endl;
+    }
+}
+
+// PART B — Print Multiplication Tables for All Numbers from 1 to N
+void printTablesUpTo(int n) {
+    // Input validation for Part B function
+    if (n <= 0) {
+        cout << "Error: Number must be a positive integer." << endl;
+        return;
+    }
+
+    for (int i = 1; i <= n; i++) {
+        printTable(i); // Reuse Part A function to print table for 'i'
+        
+        // Print separator line between tables
+        if (i < n) {
+            cout << "---------------------------" << endl;
+        }
+    }
+}
+
+int main() {
+    cout << "=========================================" << endl;
+    cout << "     MULTIPLICATION TABLE GENERATOR      " << endl;
+    cout << "=========================================" << endl;
+
+    // -------------------------------------------------------------------------
+    // PART A DEMONSTRATION
+    // -------------------------------------------------------------------------
+    cout << "\n--- PART A: Single Table ---" << endl;
+    int num;
+    cout << "Enter a number: ";
+    cin >> num;
+
+    printTable(num);
+
+    // -------------------------------------------------------------------------
+    // PART B DEMONSTRATION
+    // -------------------------------------------------------------------------
+    cout << "\n--- PART B: Tables from 1 to N ---" << endl;
+    int limit;
+    cout << "Enter a number N: ";
+    cin >> limit;
+
+    printTablesUpTo(limit);
+
+    return 0;
+}
+
